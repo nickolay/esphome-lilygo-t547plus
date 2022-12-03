@@ -46,3 +46,6 @@ async def to_code(config):
     cg.add(var.set_greyscale(config[CONF_GREYSCALE]))
 
     cg.add_build_flag("-DBOARD_HAS_PSRAM")
+
+    cg.add_library("Wire", version="2.0.0")  # required by LilyGoEPD47
+    cg.add_library("LilyGoEPD47", repository="https://github.com/Xinyuan-LilyGO/LilyGo-EPD47", version="v0.3.0")

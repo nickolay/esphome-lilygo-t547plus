@@ -2,8 +2,6 @@
 #include "esphome/core/log.h"
 #include "esphome/core/application.h"
 #include "esphome/core/helpers.h"
-#include "logo.h"
-
 #ifdef USE_ESP32_FRAMEWORK_ARDUINO
 
 #include <esp32-hal-gpio.h>
@@ -37,8 +35,8 @@ void T547::initialize_() {
     return;
   }
 
-  memset(this->buffer_, 255, buffer_size);
-  ESP_LOGV(TAG, "Initialize complete");  
+  memset(this->buffer_, 0xFF, buffer_size);
+  ESP_LOGV(TAG, "Initialize complete");
 }
 
 float T547::get_setup_priority() const { return setup_priority::PROCESSOR; }
@@ -75,7 +73,7 @@ void T547::eink_on_() {
   ESP_LOGV(TAG, "Eink on called");
   if (panel_on_ == 1)
     return;
-  epd_poweron();    
+  epd_poweron();
   panel_on_ = 1;
 }
 

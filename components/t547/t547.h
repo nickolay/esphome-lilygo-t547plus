@@ -32,7 +32,7 @@ class T547 : public PollingComponent, public display::DisplayBuffer {
   uint8_t get_panel_state() { return this->panel_on_; }
   bool get_greyscale() { return this->greyscale_; }
 
-#if ESPHOME_VERSION_CODE >= VERSION_CODE(2022,6,0) 
+#if ESPHOME_VERSION_CODE >= VERSION_CODE(2022,6,0)
   display::DisplayType get_display_type() override {
     return get_greyscale() ? display::DisplayType::DISPLAY_TYPE_GRAYSCALE : display::DisplayType::DISPLAY_TYPE_BINARY;
   }
