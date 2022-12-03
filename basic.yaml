@@ -1,18 +1,27 @@
 esphome:
   name: lilygo
   platformio_options:
+    # Unless noted otherwise, based on https://github.com/Xinyuan-LilyGO/LilyGo-EPD47/blob/1eb6119fc31fcff7a6bafecb09f4225313859fc5/examples/demo/platformio.ini#L37
     upload_speed: 921600
     monitor_speed: 115200
     board_build.mcu: esp32s3
     board_build.f_cpu: 240000000L
-    #uncommenting the following causes: .platformio/packages/framework-arduinoespressif32/tools/sdk/esp32s3/include/newlib/platform_include/assert.h:20:10: fatal error: sdkconfig.h: No such file or directory
-    # board_build.arduino.memory_type: qspi_opi
+    board_build.arduino.memory_type: qspi_opi
     board_build.flash_size: 16MB
     board_build.flash_mode: qio
     board_build.flash_type: qspi
     board_build.psram_type: opi
     board_build.memory_type: qspi_opi
     board_build.boot_freq: 80m
+    build_flags:  # the first three defines are required for the screen library to function.
+      - "-DBOARD_HAS_PSRAM"
+      - "-DARDUINO_RUNNING_CORE=0"  # TODO: this conflicts with the value from platformio's idedata, spewing a lot of warnings during the build.
+      - "-DARDUINO_EVENT_RUNNING_CORE=0"  # and this too
+      # In addition to lilygo's settings:
+      # To enable reading logs over USB until `hardware_uart: USB_CDC` support
+      # is added to `logger:`, as detailed in <https://github.com/esphome/feature-requests/issues/1906>:
+      - "-DARDUINO_USB_MODE=1"
+      - "-DARDUINO_USB_CDC_ON_BOOT=1"
 
 esp32:
   variant: esp32s3
@@ -20,10 +29,14 @@ esp32:
 
   framework:
     type: arduino
+    # Just like in <https://community.home-assistant.io/t/enable-usb-cdc-to-log-hello-world-to-esp32-s3-dev-board-for-esphome/463164/10>
+    # I had problems with newer versions; the following combination happens to work, so using it for now.
     version: 2.0.3
     platform_version: 5.1.1
 
 logger:
+  level: VERBOSE
+  # hardware_uart: USB_CDC  # see note about <https://github.com/esphome/feature-requests/issues/1906> above
 
 # Enable Home Assistant API
 api:
@@ -40,3 +53,16 @@ binary_sensor:
     name: "Button 1"
     on_press:
       - logger.log: PhysButton Pressed
+
+external_components:
+  source:
+    type: local
+    path: components/
+  components: ["t547"]
+
+display:
+  - platform: t547
+    # rotation: 180
+    update_interval: 30s
+    lambda: |-
+      it.line(0, 0, 960, 540);
