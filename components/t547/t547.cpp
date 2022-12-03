@@ -12,19 +12,12 @@ namespace t547 {
 static const char *const TAG = "t574";
 
 void T547::setup() {
-  this->initialize_();
-  this->clean();
-  this->display();
-}
-
-void T547::initialize_() {
-  ESP_LOGV(TAG, "Initialize called");  
+  ESP_LOGV(TAG, "Initialize called");
+  epd_init();
   uint32_t buffer_size = this->get_buffer_length_();
 
   if (this->buffer_ != nullptr) {
     free(this->buffer_);  // NOLINT
-
-  epd_init();
   }
 
   this->buffer_ = (uint8_t *) ps_malloc(buffer_size);
@@ -89,13 +82,6 @@ void T547::display() {
   ESP_LOGV(TAG, "Display finished (full) (%ums)", millis() - start_time);
 }
 
-void T547::clean() {
-  ESP_LOGV(TAG, "Clean called");
-  uint32_t start_time = millis();
-  epd_clear();
-
-  ESP_LOGV(TAG, "Clean finished (%ums)", millis() - start_time);
-}
 }  // namespace T547
 }  // namespace esphome
 
