@@ -30,6 +30,12 @@ external_components:
   - source: github://nickolay/esphome-lilygo-t547plus
     components: ["t547"]
 
+## for those using ESPHome 2023.6.5 and earlier:
+# external_components:
+#   - source: github://nickolay/esphome-lilygo-t547plus@2023.6.5
+#     components: [t547]
+
+
 display:
 - platform: t547
   id: t5_display
