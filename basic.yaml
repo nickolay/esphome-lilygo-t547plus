@@ -13,6 +13,8 @@ esphome:
     board_build.psram_type: opi
     board_build.memory_type: qspi_opi
     board_build.boot_freq: 80m
+    platform_packages:
+      - "toolchain-riscv32-esp @8.4.0+2021r2-patch5"
     build_flags:  # the first three defines are required for the screen library to function.
       - "-DBOARD_HAS_PSRAM"
       - "-DARDUINO_RUNNING_CORE=0"  # TODO: this conflicts with the value from platformio's idedata, spewing a lot of warnings during the build.
