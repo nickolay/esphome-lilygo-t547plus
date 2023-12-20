@@ -6,6 +6,29 @@
 
 #include <esp32-hal-gpio.h>
 
+
+
+void invertImage(esphome::display::BaseImage& image) {
+    // Parcourir tous les pixels de l'image
+    for (int y = 0; y < image.get_height(); y++) {
+        for (int x = 0; x < image.get_width(); x++) {
+            // Inverser la valeur de chaque pixel
+            uint16_t pixel_value = image.get_pixel(x, y);
+            image.set_pixel(x, y, ~pixel_value);
+        }
+    }
+}
+
+
+void invertGrayImage(esphome::display::BaseImage& image) {
+    for (int i = 0; i < image.width(); i++) {
+        for (int j = 0; j < image.height(); j++) {
+            uint8_t pixel = image.get_grayscale_pixel_(i, j);
+            image.set_grayscale_pixel_(i, j, 255 - pixel);
+        }
+    }
+}
+
 namespace esphome {
 namespace t547 {
 
@@ -40,6 +63,14 @@ size_t T547::get_buffer_length_() {
 void T547::update() {
   this->do_update_();
   this->display();
+}
+
+void T547::image(int x, int y, BaseImage *image, bool bNegative, Color color_on, Color color_off)
+{
+  if (bNegative)
+      invertImage(image);
+
+  DisplayBuffer::image(x, y, image, color_on, color_off);
 }
 
 void HOT T547::draw_absolute_pixel_internal(int x, int y, Color color) {
