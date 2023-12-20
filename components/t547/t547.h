@@ -26,7 +26,7 @@ class T547 : public PollingComponent, public display::DisplayBuffer {
   void clean();
   void update() override;
   
-  void image(int x, int y, esphome::display::BaseImage *image,bool bNegative=false, Color color_on = COLOR_ON, Color color_off = COLOR_OFF) ;
+  void image(int x, int y, esphome::display::Image *image,bool bNegative=false, Color color_on = esphome::display::COLOR_ON, Color color_off = esphome::display::COLOR_OFF) ;
 
   void setup() override;
 
