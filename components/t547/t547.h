@@ -4,6 +4,7 @@
 #include "esphome/core/hal.h"
 #include "esphome/core/version.h"
 #include "esphome/components/display/display_buffer.h"
+#include "esphome/components/image/image.h"
 
 #include "epd_driver.h"
 
