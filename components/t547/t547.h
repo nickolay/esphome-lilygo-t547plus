@@ -25,6 +25,7 @@ class T547 : public PollingComponent, public display::DisplayBuffer {
   void display();
   void clean();
   void update() override;
+  void image(int x, int y, BaseImage *image,bool bNegative=false, Color color_on = COLOR_ON, Color color_off = COLOR_OFF) ;
 
   void setup() override;
 
