@@ -8,7 +8,7 @@
 
 
 
-void invertImage(esphome::display::BaseImage& image) {
+void invertImage(esphome::display::Image& image) {
     // Parcourir tous les pixels de l'image
     for (int y = 0; y < image.get_height(); y++) {
         for (int x = 0; x < image.get_width(); x++) {
@@ -20,7 +20,7 @@ void invertImage(esphome::display::BaseImage& image) {
 }
 
 
-void invertGrayImage(esphome::display::BaseImage& image) {
+void invertGrayImage(esphome::display::Image& image) {
     for (int i = 0; i < image.width(); i++) {
         for (int j = 0; j < image.height(); j++) {
             uint8_t pixel = image.get_grayscale_pixel_(i, j);
@@ -65,7 +65,7 @@ void T547::update() {
   this->display();
 }
 
-void T547::image(int x, int y, esphome::display::BaseImage *image, bool bNegative, Color color_on, Color color_off)
+void T547::image(int x, int y, esphome::display::Image *image, bool bNegative, Color color_on, Color color_off)
 {
   if (bNegative)
       invertImage(image);
