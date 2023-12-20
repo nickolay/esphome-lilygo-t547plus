@@ -65,7 +65,7 @@ void T547::update() {
   this->display();
 }
 
-void T547::image(int x, int y, BaseImage *image, bool bNegative, Color color_on, Color color_off)
+void T547::image(int x, int y, esphome::display::BaseImage *image, bool bNegative, Color color_on, Color color_off)
 {
   if (bNegative)
       invertImage(image);
