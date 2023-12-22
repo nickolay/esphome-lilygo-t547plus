@@ -12,7 +12,11 @@
 namespace esphome {
 namespace t547 {
 
+#if ESPHOME_VERSION_CODE >= VERSION_CODE(2023, 12, 0)
+class T547 : public display::DisplayBuffer {
+#else
 class T547 : public PollingComponent, public display::DisplayBuffer {
+#endif  // VERSION_CODE(2023, 12, 0)
  public:
   void set_greyscale(bool greyscale) {
     this->greyscale_ = greyscale;
