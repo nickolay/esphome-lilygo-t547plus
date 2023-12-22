@@ -7,6 +7,7 @@ from esphome.const import (
     CONF_LAMBDA,
     CONF_PAGES,
 )
+from esphome.const import __version__ as ESPHOME_VERSION
 
 DEPENDENCIES = ["esp32"]
 
