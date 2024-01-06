@@ -21,7 +21,8 @@ class T547 : public PollingComponent, public display::DisplayBuffer {
   void set_greyscale(bool greyscale) {
     this->greyscale_ = greyscale;
   }
-
+  void set_quick_updating(bool quick_updating) { this->quick_updating_ = quick_updating; }
+  void set_full_update_every(uint32_t full_update_every) { this->full_update_every_ = full_update_every; }
   float get_setup_priority() const override;
 
   void dump_config() override;
@@ -46,8 +47,9 @@ class T547 : public PollingComponent, public display::DisplayBuffer {
 
   void eink_off_();
   void eink_on_();
-
-
+  uint32_t full_update_every_;
+  bool quick_updating_;
+  uint32_t quick_updates_{0};
   int get_width_internal() override { return 960; }
 
   int get_height_internal() override { return 540; }
