@@ -14,6 +14,7 @@ static const char *const TAG = "t574";
 void T547::setup() {
   ESP_LOGV(TAG, "Initialize called");
   epd_init();
+  epd_clear();
   uint32_t buffer_size = this->get_buffer_length_();
 
   if (this->buffer_ != nullptr) {
@@ -75,7 +76,17 @@ void T547::display() {
   uint32_t start_time = millis();
 
   epd_poweron();
-  epd_clear();
+  if(!quick_updating_ || quick_updates_ > full_update_every_)
+  {
+    epd_clear();
+    quick_updates_ = 0;
+  }
+  else
+  {
+    epd_draw_image(epd_full_screen(), this->buffer_, WHITE_ON_BLACK);
+    quick_updates_++;
+  }
+
   epd_draw_grayscale_image(epd_full_screen(), this->buffer_);
   epd_poweroff();
 
